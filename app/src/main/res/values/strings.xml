@@ -41,4 +41,11 @@
 
     <string name="alert_immediate">Llegada inmediata</string>
     <string name="alert_immediate_description">Prepárate para bajar.</string>
+    <!-- Settings -->
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_language">Idioma</string>
+    <string name="settings_language_description">Selecciona el idioma de RideWake AI</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_english">English</string>
+    <string name="settings_back">Volver</string>
 </resources>

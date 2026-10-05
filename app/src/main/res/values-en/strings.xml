@@ -41,4 +41,11 @@
 
     <string name="alert_immediate">Arriving now</string>
     <string name="alert_immediate_description">Get ready to get off.</string>
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_language_description">Choose the RideWake AI language</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_english">English</string>
+    <string name="settings_back">Back</string>
 </resources>
