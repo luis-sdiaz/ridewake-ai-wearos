@@ -10,11 +10,12 @@
 
     <!-- Destination -->
     <string name="destination_title">Where are you going?</string>
-    <string name="destination_subtitle">Select your stop</string>
-    <string name="destination_recent">Recent destinations</string>
+    <string name="destination_subtitle">Select your destination</string>
+    <string name="destination_recent">Frequent destinations</string>
     <string name="destination_home">Home</string>
     <string name="destination_university">University</string>
-    <string name="destination_center">Downtown</string>
+    <string name="destination_other">Other destination</string>
     <string name="destination_continue">Continue</string>
     <string name="destination_location">Current location</string>
+    <string name="voice_destination_prompt">Say your destination</string>
 </resources>
