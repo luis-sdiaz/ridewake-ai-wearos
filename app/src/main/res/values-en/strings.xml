@@ -18,4 +18,10 @@
     <string name="destination_continue">Continue</string>
     <string name="destination_location">Current location</string>
     <string name="voice_destination_prompt">Say your destination</string>
+    <!-- Confirmation -->
+    <string name="confirmation_title">Confirm your destination</string>
+    <string name="confirmation_subtitle">Review before starting your trip</string>
+    <string name="confirmation_destination_label">Selected destination</string>
+    <string name="confirmation_start_trip">Start journey</string>
+    <string name="confirmation_change_destination">Change destination</string>
 </resources>
