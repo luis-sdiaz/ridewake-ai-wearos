@@ -5,7 +5,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.ridewake.app.presentation.screens.home.HomeScreen
+import com.ridewake.app.presentation.navigation.RideWakeApp
 import com.ridewake.app.presentation.theme.RideWakeAITheme
 import java.util.Locale
 
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             RideWakeAITheme {
-                HomeScreen()
+                RideWakeApp()
             }
         }
     }
