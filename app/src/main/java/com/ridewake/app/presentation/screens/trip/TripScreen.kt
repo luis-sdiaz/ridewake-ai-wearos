@@ -18,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -29,6 +28,7 @@ import androidx.wear.compose.material3.Text
 import com.ridewake.app.R
 import com.ridewake.app.presentation.components.PredictiveAlertCard
 import com.ridewake.app.presentation.components.PredictiveAlertLevel
+import com.ridewake.app.presentation.theme.RideWakeColors
 import java.util.Locale
 
 @Composable
@@ -45,9 +45,9 @@ fun TripScreen(
             .background(
                 brush = Brush.radialGradient(
                     colors = listOf(
-                        Color(0xFF123442),
-                        Color(0xFF071015),
-                        Color(0xFF020405)
+                        RideWakeColors.BackgroundGlow,
+                        RideWakeColors.BackgroundMiddle,
+                        RideWakeColors.Background
                     )
                 )
             )
@@ -64,7 +64,7 @@ fun TripScreen(
 
             Text(
                 text = stringResource(R.string.trip_title),
-                color = Color.White,
+                color = RideWakeColors.TextPrimary,
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
@@ -76,7 +76,7 @@ fun TripScreen(
 
             Text(
                 text = stringResource(R.string.trip_destination_label),
-                color = Color(0xFF8FA3AC),
+                color = RideWakeColors.TripLabel,
                 fontSize = 7.sp,
                 textAlign = TextAlign.Center
             )
@@ -88,7 +88,7 @@ fun TripScreen(
             Text(
                 text = destination,
                 modifier = Modifier.fillMaxWidth(0.68f),
-                color = Color(0xFF59D9FF),
+                color = RideWakeColors.Primary,
                 fontSize = 10.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
@@ -133,7 +133,7 @@ fun TripScreen(
                 modifier = Modifier
                     .fillMaxWidth(0.76f)
                     .background(
-                        color = Color(0xFF102A33),
+                        color = RideWakeColors.TripStatusSurface,
                         shape = RoundedCornerShape(16.dp)
                     )
                     .padding(
@@ -144,7 +144,7 @@ fun TripScreen(
             ) {
                 Text(
                     text = stringResource(R.string.trip_ai_monitoring),
-                    color = Color(0xFF72E4C1),
+                    color = RideWakeColors.Success,
                     fontSize = 7.sp,
                     fontWeight = FontWeight.Medium,
                     textAlign = TextAlign.Center
@@ -167,12 +167,12 @@ fun TripScreen(
             Box(
                 modifier = Modifier
                     .background(
-                        color = Color(0xFF101D22),
+                        color = RideWakeColors.TripActionSurface,
                         shape = CircleShape
                     )
                     .border(
                         width = 1.dp,
-                        color = Color(0xFF1B333D),
+                        color = RideWakeColors.TripActionBorder,
                         shape = CircleShape
                     )
                     .clickable {
@@ -186,7 +186,7 @@ fun TripScreen(
             ) {
                 Text(
                     text = stringResource(R.string.trip_end),
-                    color = Color(0xFFA9BBC2),
+                    color = RideWakeColors.TripActionText,
                     fontSize = 7.sp,
                     fontWeight = FontWeight.Medium,
                     textAlign = TextAlign.Center
@@ -205,12 +205,12 @@ private fun TripMetric(
     Column(
         modifier = modifier
             .background(
-                color = Color(0xFF0C2028),
+                color = RideWakeColors.Surface,
                 shape = RoundedCornerShape(15.dp)
             )
             .border(
                 width = 1.dp,
-                color = Color(0xFF193A46),
+                color = RideWakeColors.Border,
                 shape = RoundedCornerShape(15.dp)
             )
             .padding(
@@ -221,7 +221,7 @@ private fun TripMetric(
     ) {
         Text(
             text = value,
-            color = Color.White,
+            color = RideWakeColors.TextPrimary,
             fontSize = 10.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
@@ -233,7 +233,7 @@ private fun TripMetric(
 
         Text(
             text = label,
-            color = Color(0xFF82959E),
+            color = RideWakeColors.TextTertiary,
             fontSize = 6.sp,
             textAlign = TextAlign.Center,
             maxLines = 1,

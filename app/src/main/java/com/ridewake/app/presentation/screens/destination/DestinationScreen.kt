@@ -27,7 +27,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,6 +38,7 @@ import androidx.wear.compose.material3.Button
 import androidx.wear.compose.material3.ButtonDefaults
 import androidx.wear.compose.material3.Text
 import com.ridewake.app.R
+import com.ridewake.app.presentation.theme.RideWakeColors
 import java.util.Locale
 
 @Composable
@@ -55,10 +55,21 @@ fun DestinationScreen(
         mutableStateOf<String?>(null)
     }
 
-    val homeLabel = stringResource(R.string.destination_home)
-    val universityLabel = stringResource(R.string.destination_university)
-    val otherLabel = stringResource(R.string.destination_other)
-    val voicePrompt = stringResource(R.string.voice_destination_prompt)
+    val homeLabel = stringResource(
+        R.string.destination_home
+    )
+
+    val universityLabel = stringResource(
+        R.string.destination_university
+    )
+
+    val otherLabel = stringResource(
+        R.string.destination_other
+    )
+
+    val voicePrompt = stringResource(
+        R.string.voice_destination_prompt
+    )
 
     val voiceLauncher =
         rememberLauncherForActivityResult(
@@ -99,15 +110,22 @@ fun DestinationScreen(
             )
         }
 
-        if (intent.resolveActivity(context.packageManager) != null) {
+        if (
+            intent.resolveActivity(
+                context.packageManager
+            ) != null
+        ) {
             voiceLauncher.launch(intent)
         }
     }
 
     val selectedDestination = when (selectedId) {
         "home" -> homeLabel
+
         "university" -> universityLabel
+
         "other" -> voiceDestination
+
         else -> null
     }
 
@@ -117,9 +135,9 @@ fun DestinationScreen(
             .background(
                 brush = Brush.radialGradient(
                     colors = listOf(
-                        Color(0xFF123442),
-                        Color(0xFF071015),
-                        Color(0xFF020405)
+                        RideWakeColors.BackgroundGlow,
+                        RideWakeColors.BackgroundMiddle,
+                        RideWakeColors.Background
                     )
                 )
             )
@@ -135,24 +153,32 @@ fun DestinationScreen(
         ) {
 
             Text(
-                text = stringResource(R.string.destination_title),
-                color = Color.White,
+                text = stringResource(
+                    R.string.destination_title
+                ),
+                color = RideWakeColors.TextPrimary,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 lineHeight = 18.sp
             )
 
-            Spacer(modifier = Modifier.height(3.dp))
+            Spacer(
+                modifier = Modifier.height(3.dp)
+            )
 
             Text(
-                text = stringResource(R.string.destination_subtitle),
-                color = Color(0xFF96A9B3),
+                text = stringResource(
+                    R.string.destination_subtitle
+                ),
+                color = RideWakeColors.TextSecondary,
                 fontSize = 9.sp,
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(
+                modifier = Modifier.height(8.dp)
+            )
 
             DestinationOption(
                 label = homeLabel,
@@ -163,7 +189,9 @@ fun DestinationScreen(
                 }
             )
 
-            Spacer(modifier = Modifier.height(5.dp))
+            Spacer(
+                modifier = Modifier.height(5.dp)
+            )
 
             DestinationOption(
                 label = universityLabel,
@@ -174,7 +202,9 @@ fun DestinationScreen(
                 }
             )
 
-            Spacer(modifier = Modifier.height(5.dp))
+            Spacer(
+                modifier = Modifier.height(5.dp)
+            )
 
             DestinationOption(
                 label = voiceDestination ?: otherLabel,
@@ -185,7 +215,9 @@ fun DestinationScreen(
                 }
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(
+                modifier = Modifier.height(8.dp)
+            )
 
             Button(
                 onClick = {
@@ -198,10 +230,12 @@ fun DestinationScreen(
                     .fillMaxWidth(0.64f)
                     .height(36.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF59D9FF),
-                    contentColor = Color(0xFF001018),
-                    disabledContainerColor = Color(0xFF16262D),
-                    disabledContentColor = Color(0xFF60737C)
+                    containerColor = RideWakeColors.Primary,
+                    contentColor = RideWakeColors.OnPrimary,
+                    disabledContainerColor =
+                        RideWakeColors.DisabledContainer,
+                    disabledContentColor =
+                        RideWakeColors.DisabledContent
                 )
             ) {
                 Text(
@@ -210,9 +244,9 @@ fun DestinationScreen(
                     ),
                     modifier = Modifier.fillMaxWidth(),
                     color = if (selectedDestination != null) {
-                        Color(0xFF001018)
+                        RideWakeColors.OnPrimary
                     } else {
-                        Color(0xFF60737C)
+                        RideWakeColors.DisabledContent
                     },
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Bold,
@@ -231,15 +265,15 @@ private fun DestinationOption(
     onClick: () -> Unit
 ) {
     val borderColor = if (selected) {
-        Color(0xFF59D9FF)
+        RideWakeColors.Primary
     } else {
-        Color(0xFF193642)
+        RideWakeColors.BorderOption
     }
 
     val backgroundColor = if (selected) {
-        Color(0xFF113847)
+        RideWakeColors.SurfaceSelected
     } else {
-        Color(0xFF09171D)
+        RideWakeColors.SurfaceOption
     }
 
     Row(
@@ -258,7 +292,9 @@ private fun DestinationOption(
             .clickable {
                 onClick()
             }
-            .padding(horizontal = 7.dp),
+            .padding(
+                horizontal = 7.dp
+            ),
         verticalAlignment = Alignment.CenterVertically
     ) {
 
@@ -267,9 +303,9 @@ private fun DestinationOption(
                 .size(24.dp)
                 .background(
                     color = if (selected) {
-                        Color(0xFF59D9FF)
+                        RideWakeColors.Primary
                     } else {
-                        Color(0xFF112832)
+                        RideWakeColors.SurfaceIcon
                     },
                     shape = CircleShape
                 ),
@@ -278,9 +314,9 @@ private fun DestinationOption(
             Text(
                 text = icon,
                 color = if (selected) {
-                    Color(0xFF001018)
+                    RideWakeColors.OnPrimary
                 } else {
-                    Color(0xFF9DB3BD)
+                    RideWakeColors.TextMuted
                 },
                 fontSize = if (icon == "MIC") {
                     6.sp
@@ -292,12 +328,14 @@ private fun DestinationOption(
             )
         }
 
-        Spacer(modifier = Modifier.size(8.dp))
+        Spacer(
+            modifier = Modifier.size(8.dp)
+        )
 
         Text(
             text = label,
             modifier = Modifier.weight(1f),
-            color = Color.White,
+            color = RideWakeColors.TextPrimary,
             fontSize = 9.sp,
             fontWeight = if (selected) {
                 FontWeight.Bold

@@ -11,7 +11,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -19,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Text
 import com.ridewake.app.R
+import com.ridewake.app.presentation.theme.RideWakeColors
 
 enum class PredictiveAlertLevel {
     EARLY,
@@ -55,24 +55,24 @@ fun PredictiveAlertCard(
 
     val accentColor = when (level) {
         PredictiveAlertLevel.EARLY ->
-            Color(0xFF59D9FF)
+            RideWakeColors.Primary
 
         PredictiveAlertLevel.NEAR ->
-            Color(0xFFFFC857)
+            RideWakeColors.Warning
 
         PredictiveAlertLevel.IMMEDIATE ->
-            Color(0xFFFF6B6B)
+            RideWakeColors.Critical
     }
 
     val backgroundColor = when (level) {
         PredictiveAlertLevel.EARLY ->
-            Color(0xFF0D252F)
+            RideWakeColors.AlertEarlySurface
 
         PredictiveAlertLevel.NEAR ->
-            Color(0xFF2A2516)
+            RideWakeColors.AlertNearSurface
 
         PredictiveAlertLevel.IMMEDIATE ->
-            Color(0xFF2C191C)
+            RideWakeColors.AlertImmediateSurface
     }
 
     Column(
@@ -107,7 +107,7 @@ fun PredictiveAlertCard(
 
         Text(
             text = description,
-            color = Color(0xFFB6C4CA),
+            color = RideWakeColors.TextSoft,
             fontSize = 6.sp,
             lineHeight = 7.sp,
             textAlign = TextAlign.Center,
