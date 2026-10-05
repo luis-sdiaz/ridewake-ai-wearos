@@ -27,6 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Text
 import com.ridewake.app.R
+import com.ridewake.app.presentation.components.PredictiveAlertCard
+import com.ridewake.app.presentation.components.PredictiveAlertLevel
 import java.util.Locale
 
 @Composable
@@ -34,6 +36,7 @@ fun TripScreen(
     destination: String,
     etaMinutes: Int = 12,
     distanceKm: Double = 3.2,
+    alertLevel: PredictiveAlertLevel = PredictiveAlertLevel.EARLY,
     onEndTrip: () -> Unit = {}
 ) {
     Box(
@@ -50,7 +53,7 @@ fun TripScreen(
             )
             .padding(
                 horizontal = 28.dp,
-                vertical = 12.dp
+                vertical = 14.dp
             ),
         contentAlignment = Alignment.Center
     ) {
@@ -67,19 +70,24 @@ fun TripScreen(
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(3.dp))
+            Spacer(
+                modifier = Modifier.height(2.dp)
+            )
 
             Text(
                 text = stringResource(R.string.trip_destination_label),
-                color = Color(0xFF96A9B3),
-                fontSize = 7.sp
+                color = Color(0xFF8FA3AC),
+                fontSize = 7.sp,
+                textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(1.dp))
+            Spacer(
+                modifier = Modifier.height(1.dp)
+            )
 
             Text(
                 text = destination,
-                modifier = Modifier.fillMaxWidth(0.70f),
+                modifier = Modifier.fillMaxWidth(0.68f),
                 color = Color(0xFF59D9FF),
                 fontSize = 10.sp,
                 fontWeight = FontWeight.Bold,
@@ -88,7 +96,9 @@ fun TripScreen(
                 overflow = TextOverflow.Ellipsis
             )
 
-            Spacer(modifier = Modifier.height(7.dp))
+            Spacer(
+                modifier = Modifier.height(6.dp)
+            )
 
             Row(
                 modifier = Modifier.fillMaxWidth(0.76f),
@@ -100,7 +110,9 @@ fun TripScreen(
                     label = stringResource(R.string.trip_eta_label)
                 )
 
-                Spacer(modifier = Modifier.width(5.dp))
+                Spacer(
+                    modifier = Modifier.width(5.dp)
+                )
 
                 TripMetric(
                     modifier = Modifier.weight(1f),
@@ -113,18 +125,20 @@ fun TripScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(7.dp))
+            Spacer(
+                modifier = Modifier.height(6.dp)
+            )
 
             Box(
                 modifier = Modifier
                     .fillMaxWidth(0.76f)
                     .background(
-                        color = Color(0xFF10262D),
-                        shape = RoundedCornerShape(15.dp)
+                        color = Color(0xFF102A33),
+                        shape = RoundedCornerShape(16.dp)
                     )
                     .padding(
-                        horizontal = 9.dp,
-                        vertical = 5.dp
+                        horizontal = 10.dp,
+                        vertical = 4.dp
                     ),
                 contentAlignment = Alignment.Center
             ) {
@@ -137,54 +151,42 @@ fun TripScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(6.dp))
+            Spacer(
+                modifier = Modifier.height(5.dp)
+            )
+
+            PredictiveAlertCard(
+                level = alertLevel,
+                modifier = Modifier.fillMaxWidth(0.76f)
+            )
+
+            Spacer(
+                modifier = Modifier.height(5.dp)
+            )
 
             Box(
                 modifier = Modifier
                     .background(
-                        color = Color(0xFF112832),
+                        color = Color(0xFF101D22),
                         shape = CircleShape
                     )
                     .border(
                         width = 1.dp,
-                        color = Color(0xFF59D9FF),
-                        shape = CircleShape
-                    )
-                    .padding(
-                        horizontal = 12.dp,
-                        vertical = 4.dp
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = stringResource(R.string.trip_alert_early),
-                    color = Color(0xFF59D9FF),
-                    fontSize = 7.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
-                )
-            }
-
-            Spacer(modifier = Modifier.height(6.dp))
-
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color(0xFF101C21),
+                        color = Color(0xFF1B333D),
                         shape = CircleShape
                     )
                     .clickable {
                         onEndTrip()
                     }
                     .padding(
-                        horizontal = 12.dp,
-                        vertical = 4.dp
+                        horizontal = 14.dp,
+                        vertical = 5.dp
                     ),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = stringResource(R.string.trip_end),
-                    color = Color(0xFF9DB3BD),
+                    color = Color(0xFFA9BBC2),
                     fontSize = 7.sp,
                     fontWeight = FontWeight.Medium,
                     textAlign = TextAlign.Center
@@ -208,7 +210,7 @@ private fun TripMetric(
             )
             .border(
                 width = 1.dp,
-                color = Color(0xFF193642),
+                color = Color(0xFF193A46),
                 shape = RoundedCornerShape(15.dp)
             )
             .padding(
@@ -225,7 +227,9 @@ private fun TripMetric(
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(1.dp))
+        Spacer(
+            modifier = Modifier.height(1.dp)
+        )
 
         Text(
             text = label,
