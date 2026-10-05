@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">RideWake AI</string>
-    <string name="hello_world">Hello, %1$s!</string>
+
+    <!-- Home -->
+    <string name="home_brand">RIDEWAKE AI</string>
+    <string name="home_greeting">Tu viaje, bajo control</string>
+    <string name="home_description">Relájate. Te avisaremos en el momento indicado antes de llegar.</string>
+    <string name="start_trip">Iniciar viaje</string>
+    <string name="ai_status">IA predictiva activa</string>
 </resources>
