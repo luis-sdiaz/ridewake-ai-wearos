@@ -1,0 +1,44 @@
+# Gradle
+.gradle/
+**/build/
+
+# Local configuration
+local.properties
+
+# Android Studio / IntelliJ IDEA
+.idea/
+*.iml
+
+# Android generated files
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Kotlin
+.kotlin/
+
+# Logs
+*.log
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Environment and secrets
+.env
+.env.*
+!*.env.example
+*.jks
+*.keystore
+
+# AI assistants and coding agents
+.claude/
+CLAUDE.md
+.cursor/
+.cursorignore
+.aider*
+.continue/
+.codex/
+.gemini/
+.agent/
+.github/copilot-instructions.md
