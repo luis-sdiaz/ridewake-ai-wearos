@@ -24,4 +24,12 @@
     <string name="confirmation_destination_label">Selected destination</string>
     <string name="confirmation_start_trip">Start journey</string>
     <string name="confirmation_change_destination">Change destination</string>
+    <!-- Active Trip -->
+    <string name="trip_title">Trip in progress</string>
+    <string name="trip_destination_label">Destination</string>
+    <string name="trip_eta_label">Estimated time</string>
+    <string name="trip_distance_label">Distance remaining</string>
+    <string name="trip_ai_monitoring">AI monitoring your journey</string>
+    <string name="trip_alert_early">Early alert</string>
+    <string name="trip_end">End trip</string>
 </resources>

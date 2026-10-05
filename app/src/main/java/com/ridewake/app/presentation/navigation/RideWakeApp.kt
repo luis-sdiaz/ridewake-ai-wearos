@@ -9,10 +9,12 @@ import androidx.compose.runtime.setValue
 import com.ridewake.app.presentation.screens.confirmation.ConfirmationScreen
 import com.ridewake.app.presentation.screens.destination.DestinationScreen
 import com.ridewake.app.presentation.screens.home.HomeScreen
+import com.ridewake.app.presentation.screens.trip.TripScreen
 
 private const val HOME_SCREEN = "home"
 private const val DESTINATION_SCREEN = "destination"
 private const val CONFIRMATION_SCREEN = "confirmation"
+private const val TRIP_SCREEN = "trip"
 
 @Composable
 fun RideWakeApp() {
@@ -54,10 +56,24 @@ fun RideWakeApp() {
             ConfirmationScreen(
                 destination = selectedDestination.orEmpty(),
                 onStartTrip = {
-                    // Aquí conectaremos la pantalla de viaje activo.
+                    currentScreen = TRIP_SCREEN
                 },
                 onChangeDestination = {
                     currentScreen = DESTINATION_SCREEN
+                }
+            )
+        }
+
+        TRIP_SCREEN -> {
+            BackHandler {
+                // Evita salir accidentalmente durante un viaje activo.
+            }
+
+            TripScreen(
+                destination = selectedDestination.orEmpty(),
+                onEndTrip = {
+                    selectedDestination = null
+                    currentScreen = HOME_SCREEN
                 }
             )
         }

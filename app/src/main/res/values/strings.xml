@@ -24,4 +24,12 @@
     <string name="confirmation_destination_label">Destino seleccionado</string>
     <string name="confirmation_start_trip">Iniciar recorrido</string>
     <string name="confirmation_change_destination">Cambiar destino</string>
+    <!-- Active Trip -->
+    <string name="trip_title">Viaje en curso</string>
+    <string name="trip_destination_label">Destino</string>
+    <string name="trip_eta_label">Tiempo estimado</string>
+    <string name="trip_distance_label">Distancia restante</string>
+    <string name="trip_ai_monitoring">IA monitoreando tu recorrido</string>
+    <string name="trip_alert_early">Aviso temprano</string>
+    <string name="trip_end">Finalizar viaje</string>
 </resources>
