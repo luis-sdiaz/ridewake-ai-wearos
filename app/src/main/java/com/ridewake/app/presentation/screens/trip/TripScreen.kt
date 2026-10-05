@@ -19,16 +19,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Text
 import com.ridewake.app.R
 import com.ridewake.app.presentation.components.PredictiveAlertCard
 import com.ridewake.app.presentation.components.PredictiveAlertLevel
 import com.ridewake.app.presentation.theme.RideWakeColors
+import com.ridewake.app.presentation.theme.RideWakeTypography
 import java.util.Locale
 
 @Composable
@@ -53,7 +52,7 @@ fun TripScreen(
             )
             .padding(
                 horizontal = 28.dp,
-                vertical = 14.dp
+                vertical = 10.dp
             ),
         contentAlignment = Alignment.Center
     ) {
@@ -65,8 +64,18 @@ fun TripScreen(
             Text(
                 text = stringResource(R.string.trip_title),
                 color = RideWakeColors.TextPrimary,
-                fontSize = 13.sp,
-                fontWeight = FontWeight.Bold,
+                style = RideWakeTypography.TripTitle,
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(
+                modifier = Modifier.height(5.dp)
+            )
+
+            Text(
+                text = stringResource(R.string.trip_destination_label),
+                color = RideWakeColors.TripLabel,
+                style = RideWakeTypography.MicroRegular,
                 textAlign = TextAlign.Center
             )
 
@@ -75,29 +84,17 @@ fun TripScreen(
             )
 
             Text(
-                text = stringResource(R.string.trip_destination_label),
-                color = RideWakeColors.TripLabel,
-                fontSize = 7.sp,
-                textAlign = TextAlign.Center
-            )
-
-            Spacer(
-                modifier = Modifier.height(1.dp)
-            )
-
-            Text(
                 text = destination,
                 modifier = Modifier.fillMaxWidth(0.68f),
                 color = RideWakeColors.Primary,
-                fontSize = 10.sp,
-                fontWeight = FontWeight.Bold,
+                style = RideWakeTypography.Value,
                 textAlign = TextAlign.Center,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
 
             Spacer(
-                modifier = Modifier.height(6.dp)
+                modifier = Modifier.height(10.dp)
             )
 
             Row(
@@ -111,7 +108,7 @@ fun TripScreen(
                 )
 
                 Spacer(
-                    modifier = Modifier.width(5.dp)
+                    modifier = Modifier.width(6.dp)
                 )
 
                 TripMetric(
@@ -126,7 +123,7 @@ fun TripScreen(
             }
 
             Spacer(
-                modifier = Modifier.height(6.dp)
+                modifier = Modifier.height(9.dp)
             )
 
             Box(
@@ -138,21 +135,20 @@ fun TripScreen(
                     )
                     .padding(
                         horizontal = 10.dp,
-                        vertical = 4.dp
+                        vertical = 5.dp
                     ),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = stringResource(R.string.trip_ai_monitoring),
                     color = RideWakeColors.Success,
-                    fontSize = 7.sp,
-                    fontWeight = FontWeight.Medium,
+                    style = RideWakeTypography.Micro,
                     textAlign = TextAlign.Center
                 )
             }
 
             Spacer(
-                modifier = Modifier.height(5.dp)
+                modifier = Modifier.height(8.dp)
             )
 
             PredictiveAlertCard(
@@ -161,7 +157,7 @@ fun TripScreen(
             )
 
             Spacer(
-                modifier = Modifier.height(5.dp)
+                modifier = Modifier.height(9.dp)
             )
 
             Box(
@@ -179,7 +175,7 @@ fun TripScreen(
                         onEndTrip()
                     }
                     .padding(
-                        horizontal = 14.dp,
+                        horizontal = 15.dp,
                         vertical = 5.dp
                     ),
                 contentAlignment = Alignment.Center
@@ -187,8 +183,7 @@ fun TripScreen(
                 Text(
                     text = stringResource(R.string.trip_end),
                     color = RideWakeColors.TripActionText,
-                    fontSize = 7.sp,
-                    fontWeight = FontWeight.Medium,
+                    style = RideWakeTypography.Micro,
                     textAlign = TextAlign.Center
                 )
             }
@@ -215,26 +210,25 @@ private fun TripMetric(
             )
             .padding(
                 horizontal = 4.dp,
-                vertical = 5.dp
+                vertical = 6.dp
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = value,
             color = RideWakeColors.TextPrimary,
-            fontSize = 10.sp,
-            fontWeight = FontWeight.Bold,
+            style = RideWakeTypography.Value,
             textAlign = TextAlign.Center
         )
 
         Spacer(
-            modifier = Modifier.height(1.dp)
+            modifier = Modifier.height(2.dp)
         )
 
         Text(
             text = label,
             color = RideWakeColors.TextTertiary,
-            fontSize = 6.sp,
+            style = RideWakeTypography.Caption,
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis

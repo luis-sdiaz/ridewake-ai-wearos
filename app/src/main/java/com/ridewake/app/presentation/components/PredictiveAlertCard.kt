@@ -12,13 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Text
 import com.ridewake.app.R
 import com.ridewake.app.presentation.theme.RideWakeColors
+import com.ridewake.app.presentation.theme.RideWakeTypography
 
 enum class PredictiveAlertLevel {
     EARLY,
@@ -96,8 +95,7 @@ fun PredictiveAlertCard(
         Text(
             text = title,
             color = accentColor,
-            fontSize = 8.sp,
-            fontWeight = FontWeight.Bold,
+            style = RideWakeTypography.LabelStrong,
             textAlign = TextAlign.Center
         )
 
@@ -108,8 +106,7 @@ fun PredictiveAlertCard(
         Text(
             text = description,
             color = RideWakeColors.TextSoft,
-            fontSize = 6.sp,
-            lineHeight = 7.sp,
+            style = RideWakeTypography.Caption,
             textAlign = TextAlign.Center,
             maxLines = 2
         )

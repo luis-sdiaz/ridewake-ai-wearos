@@ -17,15 +17,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Button
 import androidx.wear.compose.material3.ButtonDefaults
 import androidx.wear.compose.material3.Text
 import com.ridewake.app.R
 import com.ridewake.app.presentation.theme.RideWakeColors
+import com.ridewake.app.presentation.theme.RideWakeTypography
 
 @Composable
 fun HomeScreen(
@@ -45,7 +44,7 @@ fun HomeScreen(
             )
             .padding(
                 horizontal = 24.dp,
-                vertical = 14.dp
+                vertical = 16.dp
             ),
         contentAlignment = Alignment.Center
     ) {
@@ -53,20 +52,16 @@ fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            // Brand
             Text(
                 text = stringResource(R.string.home_brand),
                 color = RideWakeColors.Primary,
-                fontSize = 10.sp,
-                fontWeight = FontWeight.Bold,
-                letterSpacing = 1.6.sp
+                style = RideWakeTypography.Brand
             )
 
             Spacer(
-                modifier = Modifier.height(8.dp)
+                modifier = Modifier.height(10.dp)
             )
 
-            // AI indicator
             Box(
                 modifier = Modifier
                     .size(34.dp)
@@ -84,30 +79,25 @@ fun HomeScreen(
                 Text(
                     text = "AI",
                     color = RideWakeColors.Primary,
-                    fontSize = 11.sp,
-                    fontWeight = FontWeight.Bold
+                    style = RideWakeTypography.ProminentControl
                 )
             }
 
             Spacer(
-                modifier = Modifier.height(8.dp)
+                modifier = Modifier.height(10.dp)
             )
 
-            // Main message
             Text(
                 text = stringResource(R.string.home_greeting),
                 color = RideWakeColors.TextPrimary,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                lineHeight = 20.sp
+                style = RideWakeTypography.Hero,
+                textAlign = TextAlign.Center
             )
 
             Spacer(
-                modifier = Modifier.height(7.dp)
+                modifier = Modifier.height(9.dp)
             )
 
-            // Predictive AI status
             Box(
                 modifier = Modifier
                     .background(
@@ -123,17 +113,15 @@ fun HomeScreen(
                 Text(
                     text = stringResource(R.string.ai_status),
                     color = RideWakeColors.Success,
-                    fontSize = 8.sp,
-                    fontWeight = FontWeight.Medium,
+                    style = RideWakeTypography.Label,
                     textAlign = TextAlign.Center
                 )
             }
 
             Spacer(
-                modifier = Modifier.height(8.dp)
+                modifier = Modifier.height(10.dp)
             )
 
-            // Primary action
             Button(
                 onClick = onStartTrip,
                 modifier = Modifier
@@ -148,8 +136,7 @@ fun HomeScreen(
                     text = stringResource(R.string.start_trip),
                     modifier = Modifier.fillMaxWidth(),
                     color = RideWakeColors.OnPrimary,
-                    fontSize = 11.sp,
-                    fontWeight = FontWeight.Bold,
+                    style = RideWakeTypography.ProminentControl,
                     textAlign = TextAlign.Center
                 )
             }

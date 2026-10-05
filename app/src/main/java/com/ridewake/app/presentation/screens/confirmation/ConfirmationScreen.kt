@@ -17,16 +17,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Button
 import androidx.wear.compose.material3.ButtonDefaults
 import androidx.wear.compose.material3.Text
 import com.ridewake.app.R
 import com.ridewake.app.presentation.theme.RideWakeColors
+import com.ridewake.app.presentation.theme.RideWakeTypography
 
 @Composable
 fun ConfirmationScreen(
@@ -63,10 +62,8 @@ fun ConfirmationScreen(
                 ),
                 modifier = Modifier.fillMaxWidth(0.82f),
                 color = RideWakeColors.TextPrimary,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
+                style = RideWakeTypography.CompactTitle,
                 textAlign = TextAlign.Center,
-                lineHeight = 16.sp,
                 maxLines = 1
             )
 
@@ -80,9 +77,8 @@ fun ConfirmationScreen(
                 ),
                 modifier = Modifier.fillMaxWidth(0.82f),
                 color = RideWakeColors.TextSecondary,
-                fontSize = 8.sp,
-                textAlign = TextAlign.Center,
-                lineHeight = 10.sp
+                style = RideWakeTypography.LabelRegular,
+                textAlign = TextAlign.Center
             )
 
             Spacer(
@@ -94,8 +90,7 @@ fun ConfirmationScreen(
                     R.string.confirmation_destination_label
                 ),
                 color = RideWakeColors.Success,
-                fontSize = 8.sp,
-                fontWeight = FontWeight.Medium
+                style = RideWakeTypography.Label
             )
 
             Spacer(
@@ -123,8 +118,7 @@ fun ConfirmationScreen(
                 Text(
                     text = destination,
                     color = RideWakeColors.TextPrimary,
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.Bold,
+                    style = RideWakeTypography.Value,
                     textAlign = TextAlign.Center,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -151,8 +145,7 @@ fun ConfirmationScreen(
                     ),
                     modifier = Modifier.fillMaxWidth(),
                     color = RideWakeColors.OnPrimary,
-                    fontSize = 9.sp,
-                    fontWeight = FontWeight.Bold,
+                    style = RideWakeTypography.ButtonCompact,
                     textAlign = TextAlign.Center
                 )
             }
@@ -181,8 +174,7 @@ fun ConfirmationScreen(
                         R.string.confirmation_change_destination
                     ),
                     color = RideWakeColors.TextMuted,
-                    fontSize = 8.sp,
-                    fontWeight = FontWeight.Medium,
+                    style = RideWakeTypography.Label,
                     textAlign = TextAlign.Center
                 )
             }
