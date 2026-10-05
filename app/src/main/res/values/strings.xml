@@ -7,4 +7,13 @@
     <string name="home_description">Relájate. Te avisaremos en el momento indicado antes de llegar.</string>
     <string name="start_trip">Iniciar viaje</string>
     <string name="ai_status">IA predictiva activa</string>
+    <!-- Destination -->
+    <string name="destination_title">¿A dónde vas?</string>
+    <string name="destination_subtitle">Selecciona tu parada</string>
+    <string name="destination_recent">Destinos recientes</string>
+    <string name="destination_home">Casa</string>
+    <string name="destination_university">Universidad</string>
+    <string name="destination_center">Centro</string>
+    <string name="destination_continue">Continuar</string>
+    <string name="destination_location">Ubicación actual</string>
 </resources>
