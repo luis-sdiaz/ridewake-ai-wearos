@@ -1,0 +1,150 @@
+package com.ridewake.app.presentation.screens.home
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.wear.compose.material3.Button
+import androidx.wear.compose.material3.ButtonDefaults
+import androidx.wear.compose.material3.Text
+import com.ridewake.app.R
+
+@Composable
+fun HomeScreen(
+    onStartTrip: () -> Unit = {}
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                brush = Brush.radialGradient(
+                    colors = listOf(
+                        Color(0xFF123442),
+                        Color(0xFF071015),
+                        Color(0xFF020405)
+                    )
+                )
+            )
+            .padding(
+                horizontal = 24.dp,
+                vertical = 14.dp
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            // Brand
+            Text(
+                text = stringResource(R.string.home_brand),
+                color = Color(0xFF59D9FF),
+                fontSize = 10.sp,
+                fontWeight = FontWeight.Bold,
+                letterSpacing = 1.6.sp
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // AI indicator
+            Box(
+                modifier = Modifier
+                    .size(34.dp)
+                    .background(
+                        color = Color(0xFF0D2028),
+                        shape = CircleShape
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = Color(0xFF59D9FF),
+                        shape = CircleShape
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "AI",
+                    color = Color(0xFF59D9FF),
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Main message
+            Text(
+                text = stringResource(R.string.home_greeting),
+                color = Color.White,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                lineHeight = 20.sp
+            )
+
+            Spacer(modifier = Modifier.height(7.dp))
+
+            // Predictive AI status
+            Box(
+                modifier = Modifier
+                    .background(
+                        color = Color(0xFF10262D),
+                        shape = CircleShape
+                    )
+                    .padding(
+                        horizontal = 10.dp,
+                        vertical = 4.dp
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(R.string.ai_status),
+                    color = Color(0xFF72E4C1),
+                    fontSize = 8.sp,
+                    fontWeight = FontWeight.Medium,
+                    textAlign = TextAlign.Center
+                )
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Primary action
+            Button(
+                onClick = onStartTrip,
+                modifier = Modifier
+                    .width(118.dp)
+                    .height(40.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF59D9FF),
+                    contentColor = Color(0xFF001018)
+                )
+            ) {
+                Text(
+                    text = stringResource(R.string.start_trip),
+                    modifier = Modifier.fillMaxWidth(),
+                    color = Color(0xFF001018),
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+    }
+}
