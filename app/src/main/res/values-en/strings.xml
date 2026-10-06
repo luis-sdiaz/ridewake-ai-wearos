@@ -9,7 +9,7 @@
     <string name="ai_status">Predictive AI active</string>
 
     <!-- Destination -->
-    <string name="destination_title">Where are you going?</string>
+    <string name="destination_title">Choose destination</string>
     <string name="destination_subtitle">Select your destination</string>
     <string name="destination_recent">Frequent destinations</string>
     <string name="destination_home">Home</string>

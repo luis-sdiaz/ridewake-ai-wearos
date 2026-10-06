@@ -140,9 +140,12 @@ fun DestinationScreen(
 
             Text(
                 text = stringResource(R.string.destination_title),
+                modifier = Modifier.fillMaxWidth(0.78f),
                 color = RideWakeColors.TextPrimary,
                 style = RideWakeTypography.ScreenTitle,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
 
             Spacer(
@@ -151,9 +154,11 @@ fun DestinationScreen(
 
             Text(
                 text = stringResource(R.string.destination_subtitle),
+                modifier = Modifier.fillMaxWidth(0.76f),
                 color = RideWakeColors.TextSecondary,
                 style = RideWakeTypography.BodyRegular,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                maxLines = 2
             )
 
             Spacer(
