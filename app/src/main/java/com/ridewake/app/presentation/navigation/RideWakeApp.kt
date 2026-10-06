@@ -38,6 +38,10 @@ fun RideWakeApp() {
         mutableStateOf<String?>(null)
     }
 
+    var locationPermissionDenied by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     val currentLanguage = LanguageManager.getLanguage(context)
 
     val locationPermissionLauncher =
@@ -48,7 +52,10 @@ fun RideWakeApp() {
                 LocationPermissionManager
                     .hasPreciseLocationPermission(context)
             ) {
+                locationPermissionDenied = false
                 currentScreen = DESTINATION_SCREEN
+            } else {
+                locationPermissionDenied = true
             }
         }
 
@@ -63,6 +70,7 @@ fun RideWakeApp() {
                     ) {
                         currentScreen = DESTINATION_SCREEN
                     } else {
+                        locationPermissionDenied = false
                         currentScreen = LOCATION_PERMISSION_SCREEN
                     }
                 },
@@ -74,16 +82,19 @@ fun RideWakeApp() {
 
         LOCATION_PERMISSION_SCREEN -> {
             BackHandler {
+                locationPermissionDenied = false
                 currentScreen = HOME_SCREEN
             }
 
             LocationPermissionScreen(
+                permissionDenied = locationPermissionDenied,
                 onRequestPermission = {
                     locationPermissionLauncher.launch(
                         LocationPermissionManager.permissions
                     )
                 },
                 onNotNow = {
+                    locationPermissionDenied = false
                     currentScreen = HOME_SCREEN
                 }
             )

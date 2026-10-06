@@ -54,4 +54,6 @@
     <string name="location_permission_allow">Permitir ubicación</string>
     <string name="location_permission_not_now">Ahora no</string>
     <string name="location_permission_precise">Usa ubicación precisa para mejorar las alertas de llegada.</string>
+    <string name="location_permission_denied_title">Ubicación no permitida</string>
+    <string name="location_permission_denied_description">Necesitamos acceso a tu ubicación para iniciar el monitoreo del viaje.</string>
 </resources>

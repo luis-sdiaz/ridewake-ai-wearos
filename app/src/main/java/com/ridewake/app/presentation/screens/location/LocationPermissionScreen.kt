@@ -29,9 +29,22 @@ import com.ridewake.app.presentation.theme.RideWakeTypography
 
 @Composable
 fun LocationPermissionScreen(
+    permissionDenied: Boolean = false,
     onRequestPermission: () -> Unit = {},
     onNotNow: () -> Unit = {}
 ) {
+    val accentColor = if (permissionDenied) {
+        RideWakeColors.Warning
+    } else {
+        RideWakeColors.Primary
+    }
+
+    val indicatorSurface = if (permissionDenied) {
+        RideWakeColors.AlertNearSurface
+    } else {
+        RideWakeColors.Surface
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -57,7 +70,11 @@ fun LocationPermissionScreen(
 
             Text(
                 text = stringResource(
-                    R.string.location_permission_title
+                    if (permissionDenied) {
+                        R.string.location_permission_denied_title
+                    } else {
+                        R.string.location_permission_title
+                    }
                 ),
                 modifier = Modifier.fillMaxWidth(0.82f),
                 color = RideWakeColors.TextPrimary,
@@ -73,19 +90,19 @@ fun LocationPermissionScreen(
                 modifier = Modifier
                     .size(34.dp)
                     .background(
-                        color = RideWakeColors.Surface,
+                        color = indicatorSurface,
                         shape = CircleShape
                     )
                     .border(
                         width = 1.dp,
-                        color = RideWakeColors.Primary,
+                        color = accentColor,
                         shape = CircleShape
                     ),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "◎",
-                    color = RideWakeColors.Primary,
+                    text = if (permissionDenied) "!" else "◎",
+                    color = accentColor,
                     style = RideWakeTypography.ProminentControl,
                     textAlign = TextAlign.Center
                 )
@@ -97,7 +114,11 @@ fun LocationPermissionScreen(
 
             Text(
                 text = stringResource(
-                    R.string.location_permission_description
+                    if (permissionDenied) {
+                        R.string.location_permission_denied_description
+                    } else {
+                        R.string.location_permission_description
+                    }
                 ),
                 modifier = Modifier.fillMaxWidth(0.82f),
                 color = RideWakeColors.TextSecondary,
@@ -113,7 +134,11 @@ fun LocationPermissionScreen(
                 modifier = Modifier
                     .fillMaxWidth(0.78f)
                     .background(
-                        color = RideWakeColors.SurfaceVariant,
+                        color = if (permissionDenied) {
+                            RideWakeColors.AlertNearSurface
+                        } else {
+                            RideWakeColors.SurfaceVariant
+                        },
                         shape = CircleShape
                     )
                     .padding(
@@ -126,7 +151,11 @@ fun LocationPermissionScreen(
                     text = stringResource(
                         R.string.location_permission_precise
                     ),
-                    color = RideWakeColors.Success,
+                    color = if (permissionDenied) {
+                        RideWakeColors.Warning
+                    } else {
+                        RideWakeColors.Success
+                    },
                     style = RideWakeTypography.Caption,
                     textAlign = TextAlign.Center
                 )
