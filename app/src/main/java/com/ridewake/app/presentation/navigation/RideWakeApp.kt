@@ -2,6 +2,8 @@ package com.ridewake.app.presentation.navigation
 
 import android.app.Activity
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -9,13 +11,16 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import com.ridewake.app.core.localization.LanguageManager
+import com.ridewake.app.core.permissions.LocationPermissionManager
 import com.ridewake.app.presentation.screens.confirmation.ConfirmationScreen
 import com.ridewake.app.presentation.screens.destination.DestinationScreen
 import com.ridewake.app.presentation.screens.home.HomeScreen
+import com.ridewake.app.presentation.screens.location.LocationPermissionScreen
 import com.ridewake.app.presentation.screens.settings.SettingsScreen
 import com.ridewake.app.presentation.screens.trip.TripScreen
 
 private const val HOME_SCREEN = "home"
+private const val LOCATION_PERMISSION_SCREEN = "location_permission"
 private const val DESTINATION_SCREEN = "destination"
 private const val CONFIRMATION_SCREEN = "confirmation"
 private const val TRIP_SCREEN = "trip"
@@ -35,15 +40,51 @@ fun RideWakeApp() {
 
     val currentLanguage = LanguageManager.getLanguage(context)
 
+    val locationPermissionLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.RequestMultiplePermissions()
+        ) {
+            if (
+                LocationPermissionManager
+                    .hasPreciseLocationPermission(context)
+            ) {
+                currentScreen = DESTINATION_SCREEN
+            }
+        }
+
     when (currentScreen) {
 
         HOME_SCREEN -> {
             HomeScreen(
                 onStartTrip = {
-                    currentScreen = DESTINATION_SCREEN
+                    if (
+                        LocationPermissionManager
+                            .hasPreciseLocationPermission(context)
+                    ) {
+                        currentScreen = DESTINATION_SCREEN
+                    } else {
+                        currentScreen = LOCATION_PERMISSION_SCREEN
+                    }
                 },
                 onOpenSettings = {
                     currentScreen = SETTINGS_SCREEN
+                }
+            )
+        }
+
+        LOCATION_PERMISSION_SCREEN -> {
+            BackHandler {
+                currentScreen = HOME_SCREEN
+            }
+
+            LocationPermissionScreen(
+                onRequestPermission = {
+                    locationPermissionLauncher.launch(
+                        LocationPermissionManager.permissions
+                    )
+                },
+                onNotNow = {
+                    currentScreen = HOME_SCREEN
                 }
             )
         }
@@ -79,7 +120,7 @@ fun RideWakeApp() {
 
         TRIP_SCREEN -> {
             BackHandler {
-                // Evita finalizar accidentalmente el viaje.
+                // Prevent accidental trip termination.
             }
 
             TripScreen(
@@ -99,7 +140,6 @@ fun RideWakeApp() {
             SettingsScreen(
                 currentLanguage = currentLanguage,
                 onLanguageSelected = { languageCode ->
-
                     if (languageCode != currentLanguage) {
                         LanguageManager.setLanguage(
                             context = context,

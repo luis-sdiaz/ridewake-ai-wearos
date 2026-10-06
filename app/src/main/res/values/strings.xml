@@ -48,4 +48,10 @@
     <string name="language_spanish">Español</string>
     <string name="language_english">English</string>
     <string name="settings_back">Volver</string>
+    <!-- Location Permission -->
+    <string name="location_permission_title">Ubicación necesaria</string>
+    <string name="location_permission_description">RideWake AI necesita tu ubicación para monitorear el recorrido y avisarte antes de llegar.</string>
+    <string name="location_permission_allow">Permitir ubicación</string>
+    <string name="location_permission_not_now">Ahora no</string>
+    <string name="location_permission_precise">Usa ubicación precisa para mejorar las alertas de llegada.</string>
 </resources>
