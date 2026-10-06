@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -46,90 +44,56 @@ fun HomeScreen(
                 )
             )
             .padding(
-                horizontal = 24.dp,
-                vertical = 14.dp
+                horizontal = 26.dp,
+                vertical = 18.dp
             ),
         contentAlignment = Alignment.Center
     ) {
         Column(
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
             Text(
                 text = stringResource(R.string.home_brand),
                 color = RideWakeColors.Primary,
-                style = RideWakeTypography.Brand
+                style = RideWakeTypography.Brand,
+                textAlign = TextAlign.Center
             )
 
             Spacer(
-                modifier = Modifier.height(8.dp)
-            )
-
-            Box(
-                modifier = Modifier
-                    .size(34.dp)
-                    .background(
-                        color = RideWakeColors.Surface,
-                        shape = CircleShape
-                    )
-                    .border(
-                        width = 1.dp,
-                        color = RideWakeColors.Primary,
-                        shape = CircleShape
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "AI",
-                    color = RideWakeColors.Primary,
-                    style = RideWakeTypography.ProminentControl
-                )
-            }
-
-            Spacer(
-                modifier = Modifier.height(8.dp)
+                modifier = Modifier.height(16.dp)
             )
 
             Text(
                 text = stringResource(R.string.home_greeting),
+                modifier = Modifier.fillMaxWidth(0.88f),
                 color = RideWakeColors.TextPrimary,
                 style = RideWakeTypography.Hero,
                 textAlign = TextAlign.Center
             )
 
             Spacer(
-                modifier = Modifier.height(7.dp)
+                modifier = Modifier.height(9.dp)
             )
 
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = RideWakeColors.SurfaceVariant,
-                        shape = CircleShape
-                    )
-                    .padding(
-                        horizontal = 10.dp,
-                        vertical = 4.dp
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = stringResource(R.string.ai_status),
-                    color = RideWakeColors.Success,
-                    style = RideWakeTypography.Label,
-                    textAlign = TextAlign.Center
-                )
-            }
+            Text(
+                text = stringResource(R.string.home_description),
+                modifier = Modifier.fillMaxWidth(0.76f),
+                color = RideWakeColors.TextSecondary,
+                style = RideWakeTypography.LabelRegular,
+                textAlign = TextAlign.Center
+            )
 
             Spacer(
-                modifier = Modifier.height(8.dp)
+                modifier = Modifier.height(18.dp)
             )
 
             Button(
                 onClick = onStartTrip,
                 modifier = Modifier
-                    .width(118.dp)
-                    .height(40.dp),
+                    .fillMaxWidth(0.68f)
+                    .height(42.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = RideWakeColors.Primary,
                     contentColor = RideWakeColors.OnPrimary
@@ -145,25 +109,32 @@ fun HomeScreen(
             }
 
             Spacer(
-                modifier = Modifier.height(6.dp)
+                modifier = Modifier.height(14.dp)
             )
 
             Box(
                 modifier = Modifier
+                    .fillMaxWidth(0.44f)
+                    .height(32.dp)
                     .clip(CircleShape)
+                    .background(
+                        color = RideWakeColors.TripActionSurface,
+                        shape = CircleShape
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = RideWakeColors.TripActionBorder,
+                        shape = CircleShape
+                    )
                     .clickable {
                         onOpenSettings()
-                    }
-                    .padding(
-                        horizontal = 12.dp,
-                        vertical = 4.dp
-                    ),
+                    },
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = stringResource(R.string.settings_title),
-                    color = RideWakeColors.TextSecondary,
-                    style = RideWakeTypography.Micro,
+                    color = RideWakeColors.TripActionText,
+                    style = RideWakeTypography.ButtonCompact,
                     textAlign = TextAlign.Center
                 )
             }
