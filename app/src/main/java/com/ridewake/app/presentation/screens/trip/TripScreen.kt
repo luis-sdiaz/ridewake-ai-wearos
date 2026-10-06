@@ -1,5 +1,7 @@
 package com.ridewake.app.presentation.screens.trip
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -15,9 +17,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -38,9 +44,49 @@ fun TripScreen(
     alertLevel: PredictiveAlertLevel = PredictiveAlertLevel.EARLY,
     onEndTrip: () -> Unit = {}
 ) {
+    val density = LocalDensity.current
+
+    val shakeOffset = remember {
+        Animatable(0f)
+    }
+
+    val shakeDistance = with(density) {
+        4.dp.toPx()
+    }
+
+    LaunchedEffect(Unit) {
+        shakeOffset.snapTo(0f)
+
+        repeat(20) {
+            shakeOffset.animateTo(
+                targetValue = shakeDistance,
+                animationSpec = tween(
+                    durationMillis = 50
+                )
+            )
+
+            shakeOffset.animateTo(
+                targetValue = -shakeDistance,
+                animationSpec = tween(
+                    durationMillis = 50
+                )
+            )
+        }
+
+        shakeOffset.animateTo(
+            targetValue = 0f,
+            animationSpec = tween(
+                durationMillis = 80
+            )
+        )
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .graphicsLayer {
+                translationX = shakeOffset.value
+            }
             .background(
                 brush = Brush.radialGradient(
                     colors = listOf(
@@ -73,7 +119,9 @@ fun TripScreen(
             )
 
             Text(
-                text = stringResource(R.string.trip_destination_label),
+                text = stringResource(
+                    R.string.trip_destination_label
+                ),
                 color = RideWakeColors.TripLabel,
                 style = RideWakeTypography.MicroRegular,
                 textAlign = TextAlign.Center
@@ -104,7 +152,9 @@ fun TripScreen(
                 TripMetric(
                     modifier = Modifier.weight(1f),
                     value = "$etaMinutes min",
-                    label = stringResource(R.string.trip_eta_label)
+                    label = stringResource(
+                        R.string.trip_eta_label
+                    )
                 )
 
                 Spacer(
@@ -118,7 +168,9 @@ fun TripScreen(
                         "%.1f km",
                         distanceKm
                     ),
-                    label = stringResource(R.string.trip_distance_label)
+                    label = stringResource(
+                        R.string.trip_distance_label
+                    )
                 )
             }
 
@@ -140,7 +192,9 @@ fun TripScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = stringResource(R.string.trip_ai_monitoring),
+                    text = stringResource(
+                        R.string.trip_ai_monitoring
+                    ),
                     color = RideWakeColors.Success,
                     style = RideWakeTypography.Micro,
                     textAlign = TextAlign.Center
