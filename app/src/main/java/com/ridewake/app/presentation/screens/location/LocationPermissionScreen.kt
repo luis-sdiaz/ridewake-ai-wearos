@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +26,7 @@ import androidx.wear.compose.material3.ButtonDefaults
 import androidx.wear.compose.material3.Text
 import com.ridewake.app.R
 import com.ridewake.app.presentation.theme.RideWakeColors
+import com.ridewake.app.presentation.theme.RideWakeGradients
 import com.ridewake.app.presentation.theme.RideWakeTypography
 
 @Composable
@@ -58,7 +60,7 @@ fun LocationPermissionScreen(
                 )
             )
             .padding(
-                horizontal = 28.dp,
+                horizontal = 26.dp,
                 vertical = 12.dp
             ),
         contentAlignment = Alignment.Center
@@ -76,26 +78,26 @@ fun LocationPermissionScreen(
                         R.string.location_permission_title
                     }
                 ),
-                modifier = Modifier.fillMaxWidth(0.82f),
+                modifier = Modifier.fillMaxWidth(0.84f),
                 color = RideWakeColors.TextPrimary,
                 style = RideWakeTypography.CompactTitle,
                 textAlign = TextAlign.Center
             )
 
             Spacer(
-                modifier = Modifier.height(7.dp)
+                modifier = Modifier.height(5.dp)
             )
 
             Box(
                 modifier = Modifier
-                    .size(34.dp)
+                    .size(36.dp)
                     .background(
                         color = indicatorSurface,
                         shape = CircleShape
                     )
                     .border(
-                        width = 1.dp,
-                        color = accentColor,
+                        width = 1.5.dp,
+                        brush = RideWakeGradients.cardBorderGlow,
                         shape = CircleShape
                     ),
                 contentAlignment = Alignment.Center
@@ -109,7 +111,7 @@ fun LocationPermissionScreen(
             }
 
             Spacer(
-                modifier = Modifier.height(8.dp)
+                modifier = Modifier.height(6.dp)
             )
 
             Text(
@@ -120,19 +122,20 @@ fun LocationPermissionScreen(
                         R.string.location_permission_description
                     }
                 ),
-                modifier = Modifier.fillMaxWidth(0.82f),
+                modifier = Modifier.fillMaxWidth(0.84f),
                 color = RideWakeColors.TextSecondary,
                 style = RideWakeTypography.LabelRegular,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                maxLines = 2
             )
 
             Spacer(
-                modifier = Modifier.height(7.dp)
+                modifier = Modifier.height(6.dp)
             )
 
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(0.78f)
+                    .fillMaxWidth(0.80f)
                     .background(
                         color = if (permissionDenied) {
                             RideWakeColors.AlertNearSurface
@@ -142,8 +145,8 @@ fun LocationPermissionScreen(
                         shape = CircleShape
                     )
                     .padding(
-                        horizontal = 10.dp,
-                        vertical = 5.dp
+                        horizontal = 8.dp,
+                        vertical = 4.dp
                     ),
                 contentAlignment = Alignment.Center
             ) {
@@ -157,19 +160,21 @@ fun LocationPermissionScreen(
                         RideWakeColors.Success
                     },
                     style = RideWakeTypography.Caption,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    maxLines = 2
                 )
             }
 
             Spacer(
-                modifier = Modifier.height(8.dp)
+                modifier = Modifier.height(7.dp)
             )
 
             Button(
                 onClick = onRequestPermission,
                 modifier = Modifier
-                    .fillMaxWidth(0.68f)
+                    .fillMaxWidth(0.70f)
                     .height(36.dp),
+                shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = RideWakeColors.Primary,
                     contentColor = RideWakeColors.OnPrimary
@@ -187,7 +192,7 @@ fun LocationPermissionScreen(
             }
 
             Spacer(
-                modifier = Modifier.height(6.dp)
+                modifier = Modifier.height(5.dp)
             )
 
             Box(
