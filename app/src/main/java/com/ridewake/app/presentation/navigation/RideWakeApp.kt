@@ -10,13 +10,16 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import com.ridewake.app.core.localization.LanguageManager
 import com.ridewake.app.core.permissions.LocationPermissionManager
+import com.ridewake.app.core.trip.engine.TripSimulationEngine
 import com.ridewake.app.presentation.screens.confirmation.ConfirmationScreen
 import com.ridewake.app.presentation.screens.destination.DestinationScreen
 import com.ridewake.app.presentation.screens.home.HomeScreen
@@ -46,6 +49,9 @@ fun RideWakeApp() {
     var locationPermissionDenied by rememberSaveable {
         mutableStateOf(false)
     }
+
+    val tripSimulationEngine = remember { TripSimulationEngine() }
+    val tripState by tripSimulationEngine.tripState.collectAsState()
 
     val currentLanguage = LanguageManager.getLanguage(context)
 
@@ -133,6 +139,7 @@ fun RideWakeApp() {
                 ConfirmationScreen(
                     destination = selectedDestination.orEmpty(),
                     onStartTrip = {
+                        tripSimulationEngine.startTrip(selectedDestination ?: "Casa")
                         currentScreen = TRIP_SCREEN
                     },
                     onChangeDestination = {
@@ -147,8 +154,9 @@ fun RideWakeApp() {
                 }
 
                 TripScreen(
-                    destination = selectedDestination.orEmpty(),
+                    tripState = tripState,
                     onEndTrip = {
+                        tripSimulationEngine.stopTrip()
                         selectedDestination = null
                         currentScreen = HOME_SCREEN
                     }
