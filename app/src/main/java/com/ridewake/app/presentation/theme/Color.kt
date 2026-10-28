@@ -1,11 +1,12 @@
 package com.ridewake.app.presentation.theme
 
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 /**
  * RideWake AI Design System
  *
- * Global color tokens.
+ * Global color tokens and environmental OLED gradients.
  * These values define the core visual identity of the application.
  */
 object RideWakePalette {
@@ -117,4 +118,40 @@ object RideWakeColors {
     // Disabled states
     val DisabledContainer = RideWakePalette.DisabledSurface
     val DisabledContent = RideWakePalette.DisabledContent
+}
+
+/**
+ * Environmental OLED gradients and glowing brushes.
+ */
+object RideWakeGradients {
+    val ambientBackground = Brush.radialGradient(
+        colors = listOf(
+            RideWakePalette.Navy875,
+            RideWakePalette.Navy900,
+            RideWakePalette.Navy950
+        )
+    )
+
+    val cardBorderGlow = Brush.linearGradient(
+        colors = listOf(
+            RideWakePalette.Cyan500.copy(alpha = 0.4f),
+            RideWakePalette.Slate700,
+            RideWakePalette.Cyan500.copy(alpha = 0.15f)
+        )
+    )
+
+    val cyanGlow = Brush.radialGradient(
+        colors = listOf(
+            RideWakePalette.Cyan500.copy(alpha = 0.45f),
+            RideWakePalette.Cyan500.copy(alpha = 0.0f)
+        )
+    )
+
+    val progressSweep = Brush.sweepGradient(
+        colors = listOf(
+            RideWakePalette.Cyan500,
+            RideWakePalette.Mint400,
+            RideWakePalette.Cyan500
+        )
+    )
 }
