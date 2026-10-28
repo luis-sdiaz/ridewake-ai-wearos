@@ -354,6 +354,14 @@ Todos los estilos numéricos (`Hero`, `CompactTitle`, `TripTitle`, `Value`) inco
 
 ---
 
+## 5. Motor Há pico y Simulación Predictiva (`Core`)
+
+RideWake AI implementa retroalimentación háptica física real y progresión determinista del viaje:
+- **`HapticFeedbackManager`**: Gestiona el servicio nativo de vibración (`Vibrator` / `VibratorManager`) con patrones específicos para cada nivel de alerta (`EARLY`: 1 pulso, `NEAR`: 2 pulsos, `IMMEDIATE`: 3 pulsos rápidos, `ARRIVAL`: patrón prolongado de éxito).
+- **`TripSimulationEngine`**: Motor basado en `StateFlow` que simula la reducción gradual de distancia (desde 3.2 km hasta 0.0 km) y tiempo estimado, actualizando automáticamente el nivel de alerta predictiva y el arco de progreso perimetral en tiempo real.
+
+---
+
 # Arquitectura de información
 
 RideWake AI utiliza principalmente una navegación secuencial.
