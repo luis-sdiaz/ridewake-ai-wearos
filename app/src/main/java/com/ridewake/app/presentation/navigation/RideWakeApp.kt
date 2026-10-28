@@ -4,6 +4,11 @@ import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -59,111 +64,119 @@ fun RideWakeApp() {
             }
         }
 
-    when (currentScreen) {
+    AnimatedContent(
+        targetState = currentScreen,
+        transitionSpec = {
+            fadeIn(animationSpec = tween(300)) togetherWith fadeOut(animationSpec = tween(200))
+        },
+        label = "screen_transition"
+    ) { screen ->
+        when (screen) {
 
-        HOME_SCREEN -> {
-            HomeScreen(
-                onStartTrip = {
-                    if (
-                        LocationPermissionManager
-                            .hasPreciseLocationPermission(context)
-                    ) {
-                        currentScreen = DESTINATION_SCREEN
-                    } else {
-                        locationPermissionDenied = false
-                        currentScreen = LOCATION_PERMISSION_SCREEN
+            HOME_SCREEN -> {
+                HomeScreen(
+                    onStartTrip = {
+                        if (
+                            LocationPermissionManager
+                                .hasPreciseLocationPermission(context)
+                        ) {
+                            currentScreen = DESTINATION_SCREEN
+                        } else {
+                            locationPermissionDenied = false
+                            currentScreen = LOCATION_PERMISSION_SCREEN
+                        }
+                    },
+                    onOpenSettings = {
+                        currentScreen = SETTINGS_SCREEN
                     }
-                },
-                onOpenSettings = {
-                    currentScreen = SETTINGS_SCREEN
-                }
-            )
-        }
-
-        LOCATION_PERMISSION_SCREEN -> {
-            BackHandler {
-                locationPermissionDenied = false
-                currentScreen = HOME_SCREEN
+                )
             }
 
-            LocationPermissionScreen(
-                permissionDenied = locationPermissionDenied,
-                onRequestPermission = {
-                    locationPermissionLauncher.launch(
-                        LocationPermissionManager.permissions
-                    )
-                },
-                onNotNow = {
+            LOCATION_PERMISSION_SCREEN -> {
+                BackHandler {
                     locationPermissionDenied = false
                     currentScreen = HOME_SCREEN
                 }
-            )
-        }
 
-        DESTINATION_SCREEN -> {
-            BackHandler {
-                currentScreen = HOME_SCREEN
+                LocationPermissionScreen(
+                    permissionDenied = locationPermissionDenied,
+                    onRequestPermission = {
+                        locationPermissionLauncher.launch(
+                            LocationPermissionManager.permissions
+                        )
+                    },
+                    onNotNow = {
+                        locationPermissionDenied = false
+                        currentScreen = HOME_SCREEN
+                    }
+                )
             }
 
-            DestinationScreen(
-                onContinue = { destination ->
-                    selectedDestination = destination
-                    currentScreen = CONFIRMATION_SCREEN
+            DESTINATION_SCREEN -> {
+                BackHandler {
+                    currentScreen = HOME_SCREEN
                 }
-            )
-        }
 
-        CONFIRMATION_SCREEN -> {
-            BackHandler {
-                currentScreen = DESTINATION_SCREEN
+                DestinationScreen(
+                    onContinue = { destination ->
+                        selectedDestination = destination
+                        currentScreen = CONFIRMATION_SCREEN
+                    }
+                )
             }
 
-            ConfirmationScreen(
-                destination = selectedDestination.orEmpty(),
-                onStartTrip = {
-                    currentScreen = TRIP_SCREEN
-                },
-                onChangeDestination = {
+            CONFIRMATION_SCREEN -> {
+                BackHandler {
                     currentScreen = DESTINATION_SCREEN
                 }
-            )
-        }
 
-        TRIP_SCREEN -> {
-            BackHandler {
-                // Prevent accidental trip termination.
-            }
-
-            TripScreen(
-                destination = selectedDestination.orEmpty(),
-                onEndTrip = {
-                    selectedDestination = null
-                    currentScreen = HOME_SCREEN
-                }
-            )
-        }
-
-        SETTINGS_SCREEN -> {
-            BackHandler {
-                currentScreen = HOME_SCREEN
-            }
-
-            SettingsScreen(
-                currentLanguage = currentLanguage,
-                onLanguageSelected = { languageCode ->
-                    if (languageCode != currentLanguage) {
-                        LanguageManager.setLanguage(
-                            context = context,
-                            languageCode = languageCode
-                        )
-
-                        (context as? Activity)?.recreate()
+                ConfirmationScreen(
+                    destination = selectedDestination.orEmpty(),
+                    onStartTrip = {
+                        currentScreen = TRIP_SCREEN
+                    },
+                    onChangeDestination = {
+                        currentScreen = DESTINATION_SCREEN
                     }
-                },
-                onBack = {
+                )
+            }
+
+            TRIP_SCREEN -> {
+                BackHandler {
+                    // Prevent accidental trip termination.
+                }
+
+                TripScreen(
+                    destination = selectedDestination.orEmpty(),
+                    onEndTrip = {
+                        selectedDestination = null
+                        currentScreen = HOME_SCREEN
+                    }
+                )
+            }
+
+            SETTINGS_SCREEN -> {
+                BackHandler {
                     currentScreen = HOME_SCREEN
                 }
-            )
+
+                SettingsScreen(
+                    currentLanguage = currentLanguage,
+                    onLanguageSelected = { languageCode ->
+                        if (languageCode != currentLanguage) {
+                            LanguageManager.setLanguage(
+                                context = context,
+                                languageCode = languageCode
+                            )
+
+                            (context as? Activity)?.recreate()
+                        }
+                    },
+                    onBack = {
+                        currentScreen = HOME_SCREEN
+                    }
+                )
+            }
         }
     }
 }
