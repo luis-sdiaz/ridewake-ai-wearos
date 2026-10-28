@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -25,6 +27,7 @@ import androidx.wear.compose.material3.ButtonDefaults
 import androidx.wear.compose.material3.Text
 import com.ridewake.app.R
 import com.ridewake.app.presentation.theme.RideWakeColors
+import com.ridewake.app.presentation.theme.RideWakeGradients
 import com.ridewake.app.presentation.theme.RideWakeTypography
 
 @Composable
@@ -46,8 +49,8 @@ fun ConfirmationScreen(
                 )
             )
             .padding(
-                horizontal = 30.dp,
-                vertical = 16.dp
+                horizontal = 26.dp,
+                vertical = 14.dp
             ),
         contentAlignment = Alignment.Center
     ) {
@@ -60,7 +63,7 @@ fun ConfirmationScreen(
                 text = stringResource(
                     R.string.confirmation_title
                 ),
-                modifier = Modifier.fillMaxWidth(0.82f),
+                modifier = Modifier.fillMaxWidth(0.86f),
                 color = RideWakeColors.TextPrimary,
                 style = RideWakeTypography.CompactTitle,
                 textAlign = TextAlign.Center,
@@ -68,47 +71,68 @@ fun ConfirmationScreen(
             )
 
             Spacer(
-                modifier = Modifier.height(4.dp)
+                modifier = Modifier.height(2.dp)
             )
 
             Text(
                 text = stringResource(
                     R.string.confirmation_subtitle
                 ),
-                modifier = Modifier.fillMaxWidth(0.82f),
+                modifier = Modifier.fillMaxWidth(0.86f),
                 color = RideWakeColors.TextSecondary,
                 style = RideWakeTypography.LabelRegular,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                maxLines = 1
             )
 
             Spacer(
-                modifier = Modifier.height(11.dp)
+                modifier = Modifier.height(8.dp)
             )
 
-            Text(
-                text = stringResource(
-                    R.string.confirmation_destination_label
-                ),
-                color = RideWakeColors.Success,
-                style = RideWakeTypography.Label
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(0.84f),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(
+                        R.string.confirmation_destination_label
+                    ),
+                    modifier = Modifier.weight(1f),
+                    color = RideWakeColors.TripLabel,
+                    style = RideWakeTypography.Micro
+                )
+
+                Box(
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .background(RideWakeColors.AlertEarlySurface)
+                        .padding(horizontal = 6.dp, vertical = 2.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = stringResource(R.string.confirmation_ready_tag),
+                        color = RideWakeColors.Success,
+                        style = RideWakeTypography.CaptionStrong
+                    )
+                }
+            }
 
             Spacer(
-                modifier = Modifier.height(5.dp)
+                modifier = Modifier.height(3.dp)
             )
 
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(0.72f)
-                    .height(40.dp)
+                    .fillMaxWidth(0.84f)
+                    .height(38.dp)
                     .background(
                         color = RideWakeColors.Surface,
-                        shape = RoundedCornerShape(20.dp)
+                        shape = RoundedCornerShape(18.dp)
                     )
                     .border(
-                        width = 1.dp,
-                        color = RideWakeColors.Primary,
-                        shape = RoundedCornerShape(20.dp)
+                        width = 1.5.dp,
+                        brush = RideWakeGradients.cardBorderGlow,
+                        shape = RoundedCornerShape(18.dp)
                     )
                     .padding(
                         horizontal = 12.dp
@@ -126,14 +150,15 @@ fun ConfirmationScreen(
             }
 
             Spacer(
-                modifier = Modifier.height(9.dp)
+                modifier = Modifier.height(8.dp)
             )
 
             Button(
                 onClick = onStartTrip,
                 modifier = Modifier
-                    .fillMaxWidth(0.64f)
+                    .fillMaxWidth(0.70f)
                     .height(36.dp),
+                shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = RideWakeColors.Primary,
                     contentColor = RideWakeColors.OnPrimary
@@ -151,11 +176,12 @@ fun ConfirmationScreen(
             }
 
             Spacer(
-                modifier = Modifier.height(7.dp)
+                modifier = Modifier.height(6.dp)
             )
 
             Box(
                 modifier = Modifier
+                    .clip(CircleShape)
                     .background(
                         color = RideWakeColors.SurfaceStatus,
                         shape = CircleShape
@@ -164,8 +190,8 @@ fun ConfirmationScreen(
                         onChangeDestination()
                     }
                     .padding(
-                        horizontal = 11.dp,
-                        vertical = 5.dp
+                        horizontal = 12.dp,
+                        vertical = 4.dp
                     ),
                 contentAlignment = Alignment.Center
             ) {
