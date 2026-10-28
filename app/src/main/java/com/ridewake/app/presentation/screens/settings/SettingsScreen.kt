@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material3.Text
 import com.ridewake.app.R
 import com.ridewake.app.presentation.theme.RideWakeColors
+import com.ridewake.app.presentation.theme.RideWakeGradients
 import com.ridewake.app.presentation.theme.RideWakeTypography
 
 @Composable
@@ -46,8 +47,8 @@ fun SettingsScreen(
                 )
             )
             .padding(
-                horizontal = 26.dp,
-                vertical = 14.dp
+                horizontal = 24.dp,
+                vertical = 12.dp
             ),
         contentAlignment = Alignment.Center
     ) {
@@ -64,7 +65,7 @@ fun SettingsScreen(
             )
 
             Spacer(
-                modifier = Modifier.height(5.dp)
+                modifier = Modifier.height(3.dp)
             )
 
             Text(
@@ -75,21 +76,22 @@ fun SettingsScreen(
             )
 
             Spacer(
-                modifier = Modifier.height(3.dp)
+                modifier = Modifier.height(2.dp)
             )
 
             Text(
                 text = stringResource(
                     R.string.settings_language_description
                 ),
-                modifier = Modifier.fillMaxWidth(0.78f),
+                modifier = Modifier.fillMaxWidth(0.82f),
                 color = RideWakeColors.TextSecondary,
                 style = RideWakeTypography.LabelRegular,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                maxLines = 2
             )
 
             Spacer(
-                modifier = Modifier.height(10.dp)
+                modifier = Modifier.height(8.dp)
             )
 
             LanguageOption(
@@ -102,7 +104,7 @@ fun SettingsScreen(
             )
 
             Spacer(
-                modifier = Modifier.height(6.dp)
+                modifier = Modifier.height(5.dp)
             )
 
             LanguageOption(
@@ -115,7 +117,27 @@ fun SettingsScreen(
             )
 
             Spacer(
-                modifier = Modifier.height(10.dp)
+                modifier = Modifier.height(8.dp)
+            )
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(5.dp)
+                        .background(RideWakeColors.Success, CircleShape)
+                )
+                Spacer(modifier = Modifier.size(4.dp))
+                Text(
+                    text = stringResource(R.string.settings_version_info),
+                    color = RideWakeColors.TextTertiary,
+                    style = RideWakeTypography.Caption
+                )
+            }
+
+            Spacer(
+                modifier = Modifier.height(6.dp)
             )
 
             Box(
@@ -133,8 +155,8 @@ fun SettingsScreen(
                         onBack()
                     }
                     .padding(
-                        horizontal = 15.dp,
-                        vertical = 5.dp
+                        horizontal = 14.dp,
+                        vertical = 4.dp
                     ),
                 contentAlignment = Alignment.Center
             ) {
@@ -164,38 +186,43 @@ private fun LanguageOption(
         RideWakeColors.SurfaceOption
     }
 
-    val borderColor = if (selected) {
-        RideWakeColors.Primary
+    val borderBrush = if (selected) {
+        RideWakeGradients.cardBorderGlow
     } else {
-        RideWakeColors.BorderOption
+        Brush.linearGradient(
+            colors = listOf(
+                RideWakeColors.BorderOption,
+                RideWakeColors.BorderOption
+            )
+        )
     }
 
     Row(
         modifier = Modifier
-            .fillMaxWidth(0.78f)
-            .height(38.dp)
+            .fillMaxWidth(0.82f)
+            .height(36.dp)
             .clip(optionShape)
             .background(
                 color = backgroundColor,
                 shape = optionShape
             )
             .border(
-                width = 1.dp,
-                color = borderColor,
+                width = if (selected) 1.5.dp else 1.dp,
+                brush = borderBrush,
                 shape = optionShape
             )
             .clickable {
                 onClick()
             }
             .padding(
-                horizontal = 7.dp
+                horizontal = 8.dp
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
 
         Box(
             modifier = Modifier
-                .size(25.dp)
+                .size(24.dp)
                 .background(
                     color = if (selected) {
                         RideWakeColors.Primary
