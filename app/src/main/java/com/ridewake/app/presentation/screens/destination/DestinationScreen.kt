@@ -38,6 +38,7 @@ import androidx.wear.compose.material3.ButtonDefaults
 import androidx.wear.compose.material3.Text
 import com.ridewake.app.R
 import com.ridewake.app.presentation.theme.RideWakeColors
+import com.ridewake.app.presentation.theme.RideWakeGradients
 import com.ridewake.app.presentation.theme.RideWakeTypography
 import java.util.Locale
 
@@ -128,8 +129,8 @@ fun DestinationScreen(
                 )
             )
             .padding(
-                horizontal = 22.dp,
-                vertical = 8.dp
+                horizontal = 20.dp,
+                vertical = 6.dp
             ),
         contentAlignment = Alignment.Center
     ) {
@@ -140,29 +141,29 @@ fun DestinationScreen(
 
             Text(
                 text = stringResource(R.string.destination_title),
-                modifier = Modifier.fillMaxWidth(0.78f),
+                modifier = Modifier.fillMaxWidth(0.82f),
                 color = RideWakeColors.TextPrimary,
                 style = RideWakeTypography.ScreenTitle,
                 textAlign = TextAlign.Center,
-                maxLines = 2,
+                maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
 
             Spacer(
-                modifier = Modifier.height(3.dp)
+                modifier = Modifier.height(2.dp)
             )
 
             Text(
                 text = stringResource(R.string.destination_subtitle),
-                modifier = Modifier.fillMaxWidth(0.76f),
+                modifier = Modifier.fillMaxWidth(0.80f),
                 color = RideWakeColors.TextSecondary,
                 style = RideWakeTypography.BodyRegular,
                 textAlign = TextAlign.Center,
-                maxLines = 2
+                maxLines = 1
             )
 
             Spacer(
-                modifier = Modifier.height(8.dp)
+                modifier = Modifier.height(6.dp)
             )
 
             DestinationOption(
@@ -175,7 +176,7 @@ fun DestinationScreen(
             )
 
             Spacer(
-                modifier = Modifier.height(5.dp)
+                modifier = Modifier.height(4.dp)
             )
 
             DestinationOption(
@@ -188,7 +189,7 @@ fun DestinationScreen(
             )
 
             Spacer(
-                modifier = Modifier.height(5.dp)
+                modifier = Modifier.height(4.dp)
             )
 
             DestinationOption(
@@ -201,7 +202,7 @@ fun DestinationScreen(
             )
 
             Spacer(
-                modifier = Modifier.height(8.dp)
+                modifier = Modifier.height(6.dp)
             )
 
             Button(
@@ -212,8 +213,9 @@ fun DestinationScreen(
                 },
                 enabled = selectedDestination != null,
                 modifier = Modifier
-                    .fillMaxWidth(0.64f)
+                    .fillMaxWidth(0.68f)
                     .height(36.dp),
+                shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = RideWakeColors.Primary,
                     contentColor = RideWakeColors.OnPrimary,
@@ -248,12 +250,17 @@ private fun DestinationOption(
     selected: Boolean,
     onClick: () -> Unit
 ) {
-    val optionShape = RoundedCornerShape(17.dp)
+    val optionShape = RoundedCornerShape(18.dp)
 
-    val borderColor = if (selected) {
-        RideWakeColors.Primary
+    val borderBrush = if (selected) {
+        RideWakeGradients.cardBorderGlow
     } else {
-        RideWakeColors.BorderOption
+        Brush.linearGradient(
+            colors = listOf(
+                RideWakeColors.BorderOption,
+                RideWakeColors.BorderOption
+            )
+        )
     }
 
     val backgroundColor = if (selected) {
@@ -264,7 +271,7 @@ private fun DestinationOption(
 
     Row(
         modifier = Modifier
-            .fillMaxWidth(0.80f)
+            .fillMaxWidth(0.84f)
             .height(34.dp)
             .clip(optionShape)
             .background(
@@ -272,15 +279,15 @@ private fun DestinationOption(
                 shape = optionShape
             )
             .border(
-                width = 1.dp,
-                color = borderColor,
+                width = if (selected) 1.5.dp else 1.dp,
+                brush = borderBrush,
                 shape = optionShape
             )
             .clickable {
                 onClick()
             }
             .padding(
-                horizontal = 7.dp
+                horizontal = 8.dp
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
