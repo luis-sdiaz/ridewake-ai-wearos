@@ -1,7 +1,12 @@
 package com.ridewake.app.presentation.screens.trip
 
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -13,15 +18,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
@@ -33,6 +42,8 @@ import com.ridewake.app.R
 import com.ridewake.app.presentation.components.PredictiveAlertCard
 import com.ridewake.app.presentation.components.PredictiveAlertLevel
 import com.ridewake.app.presentation.theme.RideWakeColors
+import com.ridewake.app.presentation.theme.RideWakeGradients
+import com.ridewake.app.presentation.theme.RideWakePalette
 import com.ridewake.app.presentation.theme.RideWakeTypography
 import java.util.Locale
 
@@ -53,6 +64,18 @@ fun TripScreen(
     val shakeDistance = with(density) {
         4.dp.toPx()
     }
+
+    val infiniteTransition = rememberInfiniteTransition(label = "trip_pulse")
+
+    val dotAlpha by infiniteTransition.animateFloat(
+        initialValue = 0.3f,
+        targetValue = 1.0f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 800),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "dot_alpha"
+    )
 
     LaunchedEffect(Unit) {
         shakeOffset.snapTo(0f)
@@ -97,11 +120,29 @@ fun TripScreen(
                 )
             )
             .padding(
-                horizontal = 28.dp,
+                horizontal = 24.dp,
                 vertical = 10.dp
             ),
         contentAlignment = Alignment.Center
     ) {
+        // Bezel Progress Arc along the curved watch edge
+        Canvas(modifier = Modifier.fillMaxSize()) {
+            val strokeWidth = 4.dp.toPx()
+            val inset = strokeWidth * 0.75f
+            drawArc(
+                brush = RideWakeGradients.progressSweep,
+                startAngle = -220f,
+                sweepAngle = 260f,
+                useCenter = false,
+                topLeft = androidx.compose.ui.geometry.Offset(inset, inset),
+                size = androidx.compose.ui.geometry.Size(
+                    size.width - inset * 2,
+                    size.height - inset * 2
+                ),
+                style = Stroke(width = strokeWidth, cap = StrokeCap.Round)
+            )
+        }
+
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -115,7 +156,7 @@ fun TripScreen(
             )
 
             Spacer(
-                modifier = Modifier.height(5.dp)
+                modifier = Modifier.height(3.dp)
             )
 
             Text(
@@ -128,12 +169,12 @@ fun TripScreen(
             )
 
             Spacer(
-                modifier = Modifier.height(2.dp)
+                modifier = Modifier.height(1.dp)
             )
 
             Text(
                 text = destination,
-                modifier = Modifier.fillMaxWidth(0.68f),
+                modifier = Modifier.fillMaxWidth(0.72f),
                 color = RideWakeColors.Primary,
                 style = RideWakeTypography.Value,
                 textAlign = TextAlign.Center,
@@ -142,11 +183,11 @@ fun TripScreen(
             )
 
             Spacer(
-                modifier = Modifier.height(10.dp)
+                modifier = Modifier.height(8.dp)
             )
 
             Row(
-                modifier = Modifier.fillMaxWidth(0.76f),
+                modifier = Modifier.fillMaxWidth(0.78f),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 TripMetric(
@@ -175,43 +216,56 @@ fun TripScreen(
             }
 
             Spacer(
-                modifier = Modifier.height(9.dp)
+                modifier = Modifier.height(7.dp)
             )
 
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(0.76f)
+                    .fillMaxWidth(0.78f)
                     .background(
                         color = RideWakeColors.TripStatusSurface,
                         shape = RoundedCornerShape(16.dp)
                     )
                     .padding(
-                        horizontal = 10.dp,
-                        vertical = 5.dp
+                        horizontal = 8.dp,
+                        vertical = 4.dp
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = stringResource(
-                        R.string.trip_ai_monitoring
-                    ),
-                    color = RideWakeColors.Success,
-                    style = RideWakeTypography.Micro,
-                    textAlign = TextAlign.Center
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(6.dp)
+                            .background(
+                                color = RideWakePalette.Mint400.copy(alpha = dotAlpha),
+                                shape = CircleShape
+                            )
+                    )
+                    Spacer(modifier = Modifier.width(5.dp))
+                    Text(
+                        text = stringResource(
+                            R.string.trip_ai_monitoring
+                        ),
+                        color = RideWakeColors.Success,
+                        style = RideWakeTypography.Micro,
+                        textAlign = TextAlign.Center
+                    )
+                }
             }
 
             Spacer(
-                modifier = Modifier.height(8.dp)
+                modifier = Modifier.height(6.dp)
             )
 
             PredictiveAlertCard(
                 level = alertLevel,
-                modifier = Modifier.fillMaxWidth(0.76f)
+                modifier = Modifier.fillMaxWidth(0.78f)
             )
 
             Spacer(
-                modifier = Modifier.height(9.dp)
+                modifier = Modifier.height(7.dp)
             )
 
             Box(
@@ -229,8 +283,8 @@ fun TripScreen(
                         onEndTrip()
                     }
                     .padding(
-                        horizontal = 15.dp,
-                        vertical = 5.dp
+                        horizontal = 14.dp,
+                        vertical = 4.dp
                     ),
                 contentAlignment = Alignment.Center
             ) {
@@ -264,7 +318,7 @@ private fun TripMetric(
             )
             .padding(
                 horizontal = 4.dp,
-                vertical = 6.dp
+                vertical = 5.dp
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -276,7 +330,7 @@ private fun TripMetric(
         )
 
         Spacer(
-            modifier = Modifier.height(2.dp)
+            modifier = Modifier.height(1.dp)
         )
 
         Text(
