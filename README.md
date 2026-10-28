@@ -309,72 +309,48 @@ Se realizaron ajustes visuales para garantizar que los textos mantengan una buen
 
 ---
 
-# Design System
+# Design System & Visual Architecture
 
-RideWake AI utiliza un sistema de diseño centralizado para mantener consistencia visual entre las diferentes pantallas.
-
-Actualmente se encuentran centralizados:
-
-- colores;
-- colores semánticos;
-- tipografías;
-- fondos;
-- superficies;
-- bordes;
-- botones;
-- estados visuales.
+RideWake AI cuenta con un sistema de diseño avanzado optimizado para smartwatches con pantallas circulares (Wear OS 5 / watchOS style), combinando degradados ambientales OLED, microanimaciones fluidas y tipografía tabular de alta legibilidad.
 
 ---
 
-## Color principal
+## 1. Tokens de Color y Degradados Ambientales (`Color.kt`)
 
-El color primario de RideWake AI es:
-
-```text
-#59D9FF
-```
-
-Este tono cyan forma parte de la identidad visual de la aplicación.
-
----
-
-## Sistema de colores
-
-La configuración de colores se encuentra centralizada en:
-
-```text
-app/src/main/java/com/ridewake/app/presentation/theme/Color.kt
-```
-
-Esto permite reutilizar los mismos valores visuales en toda la aplicación y evitar definir colores directamente dentro de cada pantalla.
+Toda la interfaz utiliza exclusivamente tokens centralizados en `RideWakePalette`, `RideWakeColors` y `RideWakeGradients`:
+- **Color Principal (`Cyan550` / `#59D9FF`)**: Identidad visual y elementos interactivos primarios.
+- **Degradados OLED (`RideWakeGradients`)**:
+  - `ambientBackground`: Degradado radial desde Navy875/Navy900 hacia negro puro OLED (`#020405`), optimizado para ahorro energético y contraste inmersivo.
+  - `cardBorderGlow`: Degradado lineal con alpha sutil para bordes de tarjetas con efecto cristal pulido.
+  - `cyanGlow`: Brillo radial difuminado en Cyan500.
+  - `progressSweep`: Degradado en arco para el indicador perimetral de viaje (Cyan500 hacia Mint400).
 
 ---
 
-## Sistema tipográfico
+## 2. Tipografía Tabular y Legibilidad (`Type.kt`)
 
-La configuración tipográfica se encuentra centralizada en:
-
-```text
-app/src/main/java/com/ridewake/app/presentation/theme/Type.kt
-```
-
-Esto permite mantener una jerarquía visual consistente entre:
-
-- títulos;
-- subtítulos;
-- textos informativos;
-- etiquetas;
-- botones.
+Todos los estilos numéricos (`Hero`, `CompactTitle`, `TripTitle`, `Value`) incorporan `fontFeatureSettings = "tnum"` (Tabular figures) para garantizar que las cifras mantengan un ancho fijo y eviten saltos visuales al cambiar el tiempo estimado o la distancia restante.
 
 ---
 
-## Tema de la aplicación
+## 3. Microanimaciones y Componentes Interactivos
 
-La integración del sistema visual con Material 3 se encuentra configurada en:
+- **Pantalla de Inicio (`HomeScreen.kt`)**: Incorpora un pulso respiratorio (*Breathing Pulse*) animado mediante `rememberInfiniteTransition()` con modulación suave de escala y opacidad en un halo Cyan500.
+- **Tarjetas de Alerta Predictiva (`PredictiveAlertCard.kt`)**: Halo respiratorio sutil en el borde de la tarjeta adaptado a cada estado:
+  - `EARLY`: Resplandor en Mint400 (`#72E4C1`).
+  - `NEAR`: Resplandor intermitente en Amber400 (`#FFC857`).
+  - `IMMEDIATE`: Resplandor enérgico en Coral400 (`#FF6B6B`).
+- **Pantalla de Viaje Activo (`TripScreen.kt`)**:
+  - **Arco de Progreso Perimetral**: Dibujado mediante `Canvas` con barrido circular perimetral adaptado al bisel del reloj.
+  - **Badge de Monitoreo**: Indicador flotante con punto verde intermitente en Mint400.
+- **Transiciones de Navegación (`RideWakeApp.kt`)**: Animaciones fluidas `AnimatedContent` (`fadeIn` / `fadeOut`) entre pantallas.
 
-```text
-app/src/main/java/com/ridewake/app/presentation/theme/Theme.kt
-```
+---
+
+## 4. Ergonomía para Pantallas Circulares (Wear OS)
+
+- Márgenes de seguridad perimetrales (10-14%) para evitar recortes de texto en pantallas redondas (Small/Large Round).
+- Tarjetas tipo píldora (`RoundedCornerShape(18.dp)` a `50`) y botones ergonómicos optimizados para interacción táctil en espacios reducidos.
 
 ---
 
