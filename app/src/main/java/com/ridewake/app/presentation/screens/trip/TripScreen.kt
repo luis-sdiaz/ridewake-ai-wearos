@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -39,8 +40,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material3.Text
 import com.ridewake.app.R
+import com.ridewake.app.core.haptics.HapticFeedbackManager
+import com.ridewake.app.core.trip.model.TripState
 import com.ridewake.app.presentation.components.PredictiveAlertCard
-import com.ridewake.app.presentation.components.PredictiveAlertLevel
 import com.ridewake.app.presentation.theme.RideWakeColors
 import com.ridewake.app.presentation.theme.RideWakeGradients
 import com.ridewake.app.presentation.theme.RideWakePalette
@@ -49,12 +51,12 @@ import java.util.Locale
 
 @Composable
 fun TripScreen(
-    destination: String,
-    etaMinutes: Int = 12,
-    distanceKm: Double = 3.2,
-    alertLevel: PredictiveAlertLevel = PredictiveAlertLevel.EARLY,
+    tripState: TripState = TripState(),
     onEndTrip: () -> Unit = {}
 ) {
+    val context = LocalContext.current
+    val hapticManager = remember { HapticFeedbackManager(context) }
+
     val density = LocalDensity.current
 
     val shakeOffset = remember {
@@ -76,6 +78,20 @@ fun TripScreen(
         ),
         label = "dot_alpha"
     )
+
+    // Trigger physical haptic feedback on alert level change
+    LaunchedEffect(tripState.alertLevel) {
+        if (!tripState.isArrived) {
+            hapticManager.playAlertPattern(tripState.alertLevel)
+        }
+    }
+
+    // Trigger arrival haptic feedback
+    LaunchedEffect(tripState.isArrived) {
+        if (tripState.isArrived) {
+            hapticManager.playArrivalPattern()
+        }
+    }
 
     LaunchedEffect(Unit) {
         shakeOffset.snapTo(0f)
@@ -125,14 +141,15 @@ fun TripScreen(
             ),
         contentAlignment = Alignment.Center
     ) {
-        // Bezel Progress Arc along the curved watch edge
+        // Bezel Progress Arc along the curved watch edge driven by progressFraction
         Canvas(modifier = Modifier.fillMaxSize()) {
             val strokeWidth = 4.dp.toPx()
             val inset = strokeWidth * 0.75f
+            val sweepAngle = 260f * tripState.progressFraction
             drawArc(
                 brush = RideWakeGradients.progressSweep,
                 startAngle = -220f,
-                sweepAngle = 260f,
+                sweepAngle = if (tripState.isArrived) 260f else sweepAngle.coerceAtLeast(10f),
                 useCenter = false,
                 topLeft = androidx.compose.ui.geometry.Offset(inset, inset),
                 size = androidx.compose.ui.geometry.Size(
@@ -173,7 +190,7 @@ fun TripScreen(
             )
 
             Text(
-                text = destination,
+                text = tripState.destination.ifEmpty { "Casa" },
                 modifier = Modifier.fillMaxWidth(0.72f),
                 color = RideWakeColors.Primary,
                 style = RideWakeTypography.Value,
@@ -192,7 +209,7 @@ fun TripScreen(
             ) {
                 TripMetric(
                     modifier = Modifier.weight(1f),
-                    value = "$etaMinutes min",
+                    value = "${tripState.remainingMinutes} min",
                     label = stringResource(
                         R.string.trip_eta_label
                     )
@@ -207,7 +224,7 @@ fun TripScreen(
                     value = String.format(
                         Locale.getDefault(),
                         "%.1f km",
-                        distanceKm
+                        tripState.remainingDistanceKm
                     ),
                     label = stringResource(
                         R.string.trip_distance_label
@@ -245,9 +262,11 @@ fun TripScreen(
                     )
                     Spacer(modifier = Modifier.width(5.dp))
                     Text(
-                        text = stringResource(
-                            R.string.trip_ai_monitoring
-                        ),
+                        text = if (tripState.isArrived) {
+                            stringResource(R.string.trip_arrived_title)
+                        } else {
+                            stringResource(R.string.trip_ai_monitoring)
+                        },
                         color = RideWakeColors.Success,
                         style = RideWakeTypography.Micro,
                         textAlign = TextAlign.Center
@@ -259,10 +278,43 @@ fun TripScreen(
                 modifier = Modifier.height(6.dp)
             )
 
-            PredictiveAlertCard(
-                level = alertLevel,
-                modifier = Modifier.fillMaxWidth(0.78f)
-            )
+            if (tripState.isArrived) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(0.78f)
+                        .background(
+                            color = RideWakeColors.AlertEarlySurface,
+                            shape = RoundedCornerShape(18.dp)
+                        )
+                        .border(
+                            width = 1.5.dp,
+                            color = RideWakeColors.Success,
+                            shape = RoundedCornerShape(18.dp)
+                        )
+                        .padding(horizontal = 10.dp, vertical = 5.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = stringResource(R.string.trip_arrived_title),
+                        color = RideWakeColors.Success,
+                        style = RideWakeTypography.LabelStrong,
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(modifier = Modifier.height(1.dp))
+                    Text(
+                        text = stringResource(R.string.trip_arrived_description),
+                        color = RideWakeColors.TextSoft,
+                        style = RideWakeTypography.Caption,
+                        textAlign = TextAlign.Center,
+                        maxLines = 2
+                    )
+                }
+            } else {
+                PredictiveAlertCard(
+                    level = tripState.alertLevel,
+                    modifier = Modifier.fillMaxWidth(0.78f)
+                )
+            }
 
             Spacer(
                 modifier = Modifier.height(7.dp)
