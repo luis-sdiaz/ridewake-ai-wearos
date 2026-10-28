@@ -22,6 +22,7 @@
     <string name="confirmation_title">Confirm your destination</string>
     <string name="confirmation_subtitle">Review before starting your trip</string>
     <string name="confirmation_destination_label">Selected destination</string>
+    <string name="confirmation_ready_tag">READY</string>
     <string name="confirmation_start_trip">Start journey</string>
     <string name="confirmation_change_destination">Change destination</string>
     <!-- Active Trip -->
@@ -48,6 +49,7 @@
     <string name="language_spanish">Español</string>
     <string name="language_english">English</string>
     <string name="settings_back">Back</string>
+    <string name="settings_version_info">RideWake AI v1.2 • Wear OS 5</string>
     <!-- Location Permission -->
     <string name="location_permission_title">Location required</string>
     <string name="location_permission_description">RideWake AI needs your location to monitor the journey and alert you before you arrive.</string>
