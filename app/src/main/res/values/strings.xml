@@ -33,6 +33,8 @@
     <string name="trip_ai_monitoring">IA monitoreando tu recorrido</string>
     <string name="trip_alert_early">Aviso temprano</string>
     <string name="trip_end">Finalizar viaje</string>
+    <string name="trip_arrived_title">¡Has llegado!</string>
+    <string name="trip_arrived_description">Has alcanzado tu destino. Prepárate para descender.</string>
     <!-- Predictive Alerts -->
     <string name="alert_early">Aviso temprano</string>
     <string name="alert_early_description">Aún falta para llegar. Puedes relajarte.</string>
