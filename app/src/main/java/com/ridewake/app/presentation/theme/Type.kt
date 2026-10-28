@@ -16,7 +16,8 @@ object RideWakeTypography {
     val Hero = TextStyle(
         fontSize = 18.sp,
         lineHeight = 20.sp,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold,
+        fontFeatureSettings = "tnum"
     )
 
     // Main screen title
@@ -30,13 +31,15 @@ object RideWakeTypography {
     val CompactTitle = TextStyle(
         fontSize = 14.sp,
         lineHeight = 16.sp,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold,
+        fontFeatureSettings = "tnum"
     )
 
     // Active trip title
     val TripTitle = TextStyle(
         fontSize = 13.sp,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold,
+        fontFeatureSettings = "tnum"
     )
 
     // Brand identity
@@ -55,7 +58,8 @@ object RideWakeTypography {
     // Important values
     val Value = TextStyle(
         fontSize = 10.sp,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold,
+        fontFeatureSettings = "tnum"
     )
 
     // Standard primary button
